@@ -4,6 +4,45 @@
 
 Приложение для управления каталогом пивных напитков, составления и обработки заказов.
 
+## Сущности
+Ниже перечисленный сущности в предметной области проекта и их поля.
+
+### Admin (Администратор)
+Пользователь осуществляющий управление магазином. Может добавлять, удалять, изменять пиво. Занимается обработкой заказов.
+
+Поля:
+- Email
+- ФИО
+- Информация о себе
+
+### Client (Клиент)
+Пользователь имеющий доступ к просмотру магазина. Может добавлять выбранное пиво в корзину заказа, убрать пиво из 
+корзины заказа, оформить заказ.
+
+Поля:
+- Email
+- ФИО
+- Номер телефона
+- Информация о себе
+
+### Beer (Пиво)
+Основной товар магазина.
+
+Поля:
+- Название
+- Описание
+- Крепость
+- Плотность
+- Стоимость
+
+### Order (Заказ)
+Список пива, которое пользователь добавил в корзину и оформил к покупке. Требует обработки администратора.
+
+- Пиво (список)
+- Клиент
+- Общая стоимость
+- Обработан
+
 ## User Stories
 
 Начнём с работы "Администратора" с системой.
@@ -12,7 +51,7 @@
 
 Request:
 
-`POST /beer-shop-app/add-new-beer`
+`POST /beer-shop-app/catalog/add-new-beer`
 ```json
 {
   "title" : "Goose",
@@ -32,7 +71,7 @@ Response:
 
 Request:
 
-`POST /beer-shop-app/delete-beer`
+`POST /beer-shop-app/catalog/delete-beer?beerId=${beerId}`
 ```json
 {
   "title" : "Goose"
@@ -46,7 +85,7 @@ Response:
 
 Request:
 
-`POST /beer-shop-app/catalog/${beerId}/add-to-buscket`
+`POST /beer-shop-app/catalog/add-to-buscket?beerId=${beerId}`
 
 Response:
 `200 OK`
@@ -90,7 +129,7 @@ Response:
 
 Request:
 
-`POST /beer-shop-app/orders/${orderId}/complete-order`
+`POST /beer-shop-app/orders/complete-order?orderId=${orderId}`
 
 Response:
 `200 OK`
@@ -122,7 +161,7 @@ RESPONSE:
 
 Request:
 
-`POST /beer-shop-app/buscket/${beerId}/remove-from-buscket`
+`POST /beer-shop-app/buscket/remove-from-buscket?beerId=${beerId}`
 
 Response:
 `200 OK`
