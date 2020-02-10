@@ -1,6 +1,5 @@
 package com.gpsolutions.edu.beershop.service;
 
-import com.gpsolutions.edu.beershop.dto.Beer;
 import com.gpsolutions.edu.beershop.dto.ClientSignInRequest;
 import com.gpsolutions.edu.beershop.dto.ClientSignUpRequest;
 import lombok.extern.java.Log;
@@ -26,7 +25,5 @@ public class ClientService {
         log.info(String.format("Beer (%d) successfully removed from client (%d) bucket", beerId, clientId));
     }
 
-    public void makeOrder(final Long clientId){
-        log.info(String.format("Order has been successfully created for client (%d)", clientId));
-    }
+
 }

@@ -1,6 +1,6 @@
 package com.gpsolutions.edu.beershop.service;
 
-import com.gpsolutions.edu.beershop.dto.Beer;
+import com.gpsolutions.edu.beershop.dto.BeerDTO;
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +20,7 @@ public class BeerCatalogService {
                 "]";
     }
 
-    public void addNewBeer(Beer beer){
+    public void addNewBeer(BeerDTO beer){
         log.info("Beer " + beer.getTitle() + " successfully added");
     }
 
