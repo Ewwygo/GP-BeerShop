@@ -55,15 +55,6 @@ public class ClientControllerTest {
                 .andExpect(status().isOk());
     }
 
-    @Test
-    public void testClientAddToBucketIsOk() throws Exception {
-
-        mockMvc.perform(post("/beer-shop-app/client/add-to-bucket/catalog/1")
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .header("clientId",1))
-                //then
-                .andExpect(status().isOk());
-    }
 
     @Test
     public void testClientMakeOrderIsOk() throws Exception {
@@ -74,12 +65,5 @@ public class ClientControllerTest {
                 .andExpect(status().isOk());
     }
 
-    @Test
-    public void testClientRemoveFromBucketIsOk() throws Exception {
-        mockMvc.perform(post("/beer-shop-app/client/bucket/remove-from-bucket/1")
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .header("clientId",1))
-                .andExpect(status().isOk());
-    }
 
 }

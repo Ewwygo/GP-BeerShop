@@ -78,18 +78,6 @@ Request:
 Response:
 `200 OK`
 
-### BS-3 Как "Клиент" я хочу добавить пиво в корзину заказа, чтобы приобрести несколько видов пива за раз
-
-Request:
-
-`POST /beer-shop-app/catalog/add-to-bucket/${beerId}`
-`Headers: clientId=1`
-
-Response:
-`200 OK`
-```json
-"$Beer {beerId} successfully added to client {clientId} bucket"
-```
 
 ### BS-4 Как "Клиент" я хочу создать заказ с пивом из моей корзины и в резульате создаю его
 
@@ -153,18 +141,6 @@ RESPONSE:
       "price" : 5
     }
 ]
-```
-
-### BS-8 Как "Клиент" я хочу удалить пиво "Goose" из своей корзины заказа и в результате удаляю его
-
-Request:
-
-`POST /beer-shop-app/bucket/remove-from-bucket/${beerId}`
-
-Response:
-`200 OK`
-```json
-"Beer ${beerTitle} has been successfully removed from your bucket"
 ```
 
 ### BS-9 Как "Гость" я хочу зарегистрироваться в системе , и, если такого пользователя не найдено, регистрируюсь
