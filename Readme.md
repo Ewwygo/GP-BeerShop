@@ -85,11 +85,22 @@ Request:
 
 `POST /beer-shop-app/make-order`
 `Headers: clientId=1`
+```json
+[
+  {
+  "beerId" : 1,
+  "amount" : 1
+  },
+  
+  {
+  "beerId" : 2,
+  "amount" : 2
+  }
+]
+```
 Response:
 `200 OK`
-```json
-"Order has been successfully created for client 1"
-```
+
 
 ### BS-5 Как "Администратор" я хочу просмотреть все оформленные заказы, чтобы узнать количество и номера необработанных заказов
 
@@ -143,7 +154,7 @@ RESPONSE:
 ]
 ```
 
-### BS-9 Как "Гость" я хочу зарегистрироваться в системе , и, если такого пользователя не найдено, регистрируюсь
+### BS-9 Как "Гость" я хочу зарегистрироваться в системе , и, если такого пользователя не найдено, регистрируюсь и получаю JWT токен для работы в системе
 
 Request:
 
@@ -162,7 +173,7 @@ Response:
 `201 CREATED`
 ```json
 {
-  "id" : 1
+  "token" : "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2YXN5YUBlbWFpbC5jb20iLCJleHAiOjE1Nzk5MDQ2OTksImlhdCI6MTU3OTg2ODY5OX0.8JG6O4U5F3xyOlOTyeSfl3Siim91HiJ-d4Dz5Guse8I"
 }
 ```
 
@@ -180,3 +191,8 @@ Request:
 
 Response:
 `200 OK`
+```json
+{
+  "token" : "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2YXN5YUBlbWFpbC5jb20iLCJleHAiOjE1Nzk5MDQ2OTksImlhdCI6MTU3OTg2ODY5OX0.8JG6O4U5F3xyOlOTyeSfl3Siim91HiJ-d4Dz5Guse8I"
+}
+```

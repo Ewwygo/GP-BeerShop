@@ -1,4 +1,4 @@
-package com.gpsolutions.edu.beershop;
+package com.gpsolutions.edu.beershop.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-public class AdminController {
+public class AdminControllerTest {
 
 
     @Autowired

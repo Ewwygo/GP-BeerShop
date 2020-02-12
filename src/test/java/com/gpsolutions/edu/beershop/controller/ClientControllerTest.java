@@ -60,7 +60,18 @@ public class ClientControllerTest {
     public void testClientMakeOrderIsOk() throws Exception {
         mockMvc.perform(post("/beer-shop-app/client/make-order")
                             .contentType(MediaType.APPLICATION_JSON)
-                            .header("clientId",1))
+                            .header("clientId",1)
+                            .content("[\n" +
+                                    "  {\n" +
+                                    "  \"beerId\" : 1,\n" +
+                                    "  \"amount\" : 1\n" +
+                                    "  },\n" +
+                                    "  \n" +
+                                    "  {\n" +
+                                    "  \"beerId\" : 2,\n" +
+                                    "  \"amount\" : 2\n" +
+                                    "  }\n" +
+                                    "]"))
                 //then
                 .andExpect(status().isOk());
     }

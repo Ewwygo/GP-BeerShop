@@ -1,4 +1,4 @@
-package com.gpsolutions.edu.beershop;
+package com.gpsolutions.edu.beershop.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +12,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@AutoConfigureMockMvc
-public class BeerCatalogController {
 
-    @Autowired
-    private MockMvc mockMvc;
+public class BeerCatalogControllerTest extends AbstractControllerTest {
 
     @Test
     public void testCatalogIsOk() throws Exception {
@@ -37,7 +33,10 @@ public class BeerCatalogController {
 
     @Test
     public void testCatalogAddNewBeerIsOk() throws Exception {
-        mockMvc.perform(post("/beer-shop-app/catalog/add-new-beer")
+        //given
+        final String token = signInAsAdmin();
+        //when
+        mockMvc.perform(post("/beer-shop-app/catalog/add-new-beer").header("Authorization", token)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content("{\n" +
                                         "  \"title\" : \"Goose\",\n" +
@@ -47,6 +46,23 @@ public class BeerCatalogController {
                                         "  \"price\" : 5\n" +
                                         "}"))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testCatalogAddNewBeerWhenAccessedByClient() throws Exception {
+        //given
+        final String token = signInAsClient();
+        //when
+        mockMvc.perform(post("/beer-shop-app/catalog/add-new-beer").header("Authorization", token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\n" +
+                        "  \"title\" : \"Goose\",\n" +
+                        "  \"description\" : \"Strong\",\n" +
+                        "  \"alco\" : \"5.7%\",\n" +
+                        "  \"density\" : \"10%\",\n" +
+                        "  \"price\" : 5\n" +
+                        "}"))
+                .andExpect(status().isForbidden());
     }
 
     @Test
