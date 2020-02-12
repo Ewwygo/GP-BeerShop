@@ -1,5 +1,6 @@
 package com.gpsolutions.edu.beershop.controller;
 
+import com.gpsolutions.edu.beershop.exception.SuchBeerAlreadyExistException;
 import com.gpsolutions.edu.beershop.exception.SuchClientAlreadyExistException;
 import lombok.Data;
 import lombok.extern.java.Log;
@@ -14,13 +15,11 @@ import java.util.logging.Level;
 @Log
 public class ExceptionControllerAdvice {
 
-    @ExceptionHandler(SuchClientAlreadyExistException.class)
+    @ExceptionHandler({SuchClientAlreadyExistException.class, SuchBeerAlreadyExistException.class})
     private ResponseEntity<ErrorMessage> hanleBadRequest(final Exception e) {
         log.log(Level.SEVERE, e.getMessage(), e);
         return new ResponseEntity<>(new ErrorMessage(e.getMessage()), HttpStatus.BAD_REQUEST);
     }
-
-
 
     @Data
     public static class ErrorMessage{

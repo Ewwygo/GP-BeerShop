@@ -1,15 +1,16 @@
 package com.gpsolutions.edu.beershop.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
-
+@Builder
 public class BeerDTO {
 
-    String title;
-    String description;
-    String alco;
-    String density;
-    double price;
-    long id;
+    private Long id;
+    private String title;
+    private String description;
+    private String alco;
+    private String density;
+    private double price;
 }

@@ -66,9 +66,47 @@ public class BeerCatalogControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    public void testCatalogAddNewBeerWhenNotAuthorized() throws Exception {
+        //given
+        //when
+        mockMvc.perform(post("/beer-shop-app/catalog/add-new-beer")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\n" +
+                        "  \"title\" : \"Goose\",\n" +
+                        "  \"description\" : \"Strong\",\n" +
+                        "  \"alco\" : \"5.7%\",\n" +
+                        "  \"density\" : \"10%\",\n" +
+                        "  \"price\" : 5\n" +
+                        "}"))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
     public void testCatalogDeleteBeerIsOk() throws Exception {
-        mockMvc.perform(post("/beer-shop-app/catalog/delete-beer/1")
+        //given
+        final String token = signInAsAdmin();
+        //when
+        mockMvc.perform(post("/beer-shop-app/catalog/delete-beer/1").header("Authorization",token)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testCatalogDeleteBeerWhenAccessedByClient() throws Exception {
+        //given
+        final String token = signInAsClient();
+        //when
+        mockMvc.perform(post("/beer-shop-app/catalog/delete-beer/1").header("Authorization",token)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    public void testCatalogDeleteBeerWhenNotAuthorized() throws Exception {
+        //given
+        //when
+        mockMvc.perform(post("/beer-shop-app/catalog/delete-beer/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden());
     }
 }

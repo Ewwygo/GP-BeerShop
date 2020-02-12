@@ -1,11 +1,15 @@
 package com.gpsolutions.edu.beershop.controller;
 
 import com.gpsolutions.edu.beershop.dto.BeerDTO;
+import com.gpsolutions.edu.beershop.exception.SuchBeerAlreadyExistException;
 import com.gpsolutions.edu.beershop.service.BeerCatalogService;
 import lombok.extern.java.Log;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/beer-shop-app/catalog")
@@ -20,13 +24,13 @@ public class BeerCatalogController {
 
     @GetMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public String catalog(){
-        return beerCatalogService.catalog();
+    public List<BeerDTO> catalog(){
+        return beerCatalogService.getCatalog();
     }
 
     @PostMapping(value = "/add-new-beer", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public void addNewBeer(@RequestBody final BeerDTO beer){
+    public void addNewBeer(@RequestBody final BeerDTO beer) throws SuchBeerAlreadyExistException {
         beerCatalogService.addNewBeer(beer);
     }
 
