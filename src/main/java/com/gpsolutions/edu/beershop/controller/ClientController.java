@@ -36,19 +36,6 @@ public class ClientController {
         return clientService.signIn(request);
     }
 
-    @PostMapping(value = "/add-to-bucket/catalog/{beerId}")
-    @ResponseStatus(HttpStatus.OK)
-    public void addToBucket(@PathVariable final Long beerId,
-                              @RequestHeader final Long clientId) {
-        clientService.addToBucket(beerId,clientId);
-    }
-
-    @PostMapping(value = "/bucket/remove-from-bucket/{beerId}")
-    @ResponseStatus(HttpStatus.OK)
-    public void removeFromBucket(@PathVariable final Long beerId,
-                                 @RequestHeader final Long clientId) {
-        clientService.removeFromBucket(beerId,clientId);
-    }
 
     @PostMapping(value = "/make-order")
     @ResponseStatus(HttpStatus.OK)
