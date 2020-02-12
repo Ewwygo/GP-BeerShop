@@ -17,13 +17,5 @@ public class ClientService {
         return "";
     }
 
-    public void addToBucket(final Long beerId, final Long clientId) {
-        log.info(String.format("Beer (%d) successfully added to client (%d) bucket", beerId, clientId));
-    }
-
-    public void removeFromBucket(final Long beerId, final Long clientId) {
-        log.info(String.format("Beer (%d) successfully removed from client (%d) bucket", beerId, clientId));
-    }
-
 
 }
