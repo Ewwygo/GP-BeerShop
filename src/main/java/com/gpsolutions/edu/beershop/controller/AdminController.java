@@ -4,6 +4,7 @@ import com.gpsolutions.edu.beershop.service.AdminService;
 import com.gpsolutions.edu.beershop.service.OrderService;
 import lombok.extern.java.Log;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,7 +22,7 @@ public class AdminController {
 
     @GetMapping(value = "/orders")
     @ResponseStatus(HttpStatus.OK)
-    public String orders(){
+    public String orders(final Authentication authentication){
         return orderService.orders();
     }
 

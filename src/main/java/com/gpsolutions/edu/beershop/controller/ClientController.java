@@ -15,26 +15,14 @@ import org.springframework.web.bind.annotation.*;
 @Log
 public class ClientController {
 
-    private final ClientService clientService;
+
     private final OrderService orderService;
 
-    public ClientController(ClientService clientService, OrderService orderService) {
-        this.clientService = clientService;
+    public ClientController(OrderService orderService) {
         this.orderService = orderService;
     }
 
-    @PostMapping(value = "/sign-up", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.CREATED)
-    public String signUp(@RequestBody final ClientSignUpRequest request){
-        log.info("property " + request.getEmail());
-        return clientService.signUp(request);
-    }
 
-    @PostMapping(value = "/sign-in", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-    public String signIn(@RequestBody final ClientSignInRequest request){
-        return clientService.signIn(request);
-    }
 
 
     @PostMapping(value = "/make-order")
