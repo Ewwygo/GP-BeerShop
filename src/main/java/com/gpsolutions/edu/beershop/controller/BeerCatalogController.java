@@ -22,11 +22,12 @@ public class BeerCatalogController {
         this.beerCatalogService = beerCatalogService;
     }
 
-    @GetMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "")
     @ResponseStatus(HttpStatus.OK)
     public List<BeerDTO> catalog(){
         return beerCatalogService.getCatalog();
     }
+
 
     @PostMapping(value = "/add-new-beer", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)

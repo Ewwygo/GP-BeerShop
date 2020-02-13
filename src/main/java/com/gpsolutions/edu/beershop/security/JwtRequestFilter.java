@@ -1,5 +1,6 @@
 package com.gpsolutions.edu.beershop.security;
 
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +18,7 @@ import java.io.IOException;
 @Component
 @RequiredArgsConstructor
 public class JwtRequestFilter extends OncePerRequestFilter {
+
 
     private final LoadClientDetailService loadClientDetailService;
     private final JwtUtil jwtUtil;

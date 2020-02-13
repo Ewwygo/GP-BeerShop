@@ -9,5 +9,4 @@ import java.util.List;
 @Repository
 public interface BeerRepository extends JpaRepository<BeerEntity, Long> {
 
-    List<BeerEntity> findAll();
 }
