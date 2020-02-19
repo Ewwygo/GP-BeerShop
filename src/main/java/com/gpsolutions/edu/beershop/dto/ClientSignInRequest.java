@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class ClientSignInRequest {
-    String email;
+    String login;
     String password;
 }

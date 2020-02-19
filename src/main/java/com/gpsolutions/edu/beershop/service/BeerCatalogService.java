@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Log
@@ -34,11 +33,13 @@ public class BeerCatalogService {
                 .build()));
     }
 
-    public List<BeerDTO> getCatalog(){
-        return beerRepository.findAll().stream().map(beerMapper::destinationToSource).collect(Collectors.toList());
+    public List<BeerDTO> getCatalog() {
+        final List<BeerEntity> beerEntities = beerRepository.findAll();
+        final List<BeerDTO> berrDtos = beerEntities.stream().map(beerMapper::destinationToSource).collect(Collectors.toList());
+        return berrDtos;
     }
 
-    public void addNewBeer(BeerDTO beer) throws SuchBeerAlreadyExistException {
+    public void addNewBeer(final BeerDTO beer) throws SuchBeerAlreadyExistException {
 
         beerRepository.save(beerMapper.sourceToDestination(beer));
 
@@ -49,7 +50,7 @@ public class BeerCatalogService {
         }*/
     }
 
-    public void deleteBeer(Long beerId){
+    public void deleteBeer(final Long beerId) {
         beerRepository.delete(beerRepository.findById(beerId).get());
     }
 }

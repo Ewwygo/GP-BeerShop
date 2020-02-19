@@ -26,6 +26,8 @@ public class AuthController {
 
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
+    private final static String SALT = "my salt stonks";
+
 
     private final ClientService clientService;
 
@@ -33,16 +35,16 @@ public class AuthController {
     @ResponseStatus(HttpStatus.CREATED)
     public UserSignInResponse signUp(@RequestBody final ClientSignUpRequest request) throws SuchClientAlreadyExistException {
         clientService.signUp(request);
-        return signIn(new ClientSignInRequest(request.getEmail(),request.getPassword()));
+        return signIn(new ClientSignInRequest(request.getLogin(),request.getPassword()));
     }
 
     @PostMapping(value = "/sign-in", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public UserSignInResponse signIn(@RequestBody final ClientSignInRequest request){
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(),request.getPassword()));
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getLogin(),request.getPassword() + SALT));
 
         return new UserSignInResponse(
                 jwtUtil.generateToken(
-                        new User(request.getEmail(),request.getPassword(), List.of(new SimpleGrantedAuthority("CLIENT")))));
+                        new User(request.getLogin(),request.getPassword() + SALT, List.of(new SimpleGrantedAuthority("CLIENT")))));
     }
 }

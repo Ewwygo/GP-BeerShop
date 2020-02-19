@@ -18,7 +18,7 @@ public class BeerCatalogController {
 
     private final BeerCatalogService beerCatalogService;
 
-    public BeerCatalogController(BeerCatalogService beerCatalogService) {
+    public BeerCatalogController(final BeerCatalogService beerCatalogService) {
         this.beerCatalogService = beerCatalogService;
     }
 

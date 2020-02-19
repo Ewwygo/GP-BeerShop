@@ -12,7 +12,7 @@ import javax.persistence.Id;
 public class ClientDTO {
 
     private Long id;
-    private String email;
+    private String login;
     private String fio;
     private String phoneNumber;
     private String info;

@@ -1,7 +1,7 @@
 package com.gpsolutions.edu.beershop.security;
 
-import com.gpsolutions.edu.beershop.entity.AuthInfoEntity;
-import com.gpsolutions.edu.beershop.repository.AuthInfoRepository;
+import com.gpsolutions.edu.beershop.entity.UserEntity;
+import com.gpsolutions.edu.beershop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -17,17 +17,17 @@ import java.util.*;
 public class LoadClientDetailService implements UserDetailsService {
 
 
-    private final AuthInfoRepository authInfoRepository;
+    private final UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
 
-        final Optional<AuthInfoEntity> authInfoEntity = authInfoRepository.findByLogin(username);
-        if (authInfoEntity.isEmpty()) {
+        final Optional<UserEntity> userEntity = userRepository.findByLogin(username);
+        if (userEntity.isEmpty()) {
             throw new UsernameNotFoundException("User with email: " + username + " not found");
         } else {
-            final SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + authInfoEntity.get().getUser().getRole().name());
-            return new User(username,authInfoEntity.get().getPassword(), List.of(authority));
+            final SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + userEntity.get().getRole().name());
+            return new User(username,userEntity.get().getPassword(), List.of(authority));
         }
     }
 
