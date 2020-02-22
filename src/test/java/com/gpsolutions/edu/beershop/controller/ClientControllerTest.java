@@ -1,41 +1,28 @@
 package com.gpsolutions.edu.beershop.controller;
 
-import org.hibernate.validator.internal.metadata.aggregated.MetaDataBuilder;
+import com.gpsolutions.edu.beershop.service.OrderService;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.TestExecutionListeners;
-import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.mockito.BDDMockito.willReturn;
 
 
 public class ClientControllerTest extends AbstractControllerTest {
+
+    @MockBean
+    protected OrderService orderService;
 
     @Test
     public void testClientMakeOrderIsOk() throws Exception {
         //given
         final String token = signInAsClient();
+
         //when
-        mockMvc.perform(post("/beer-shop-app/client/make-order").header("Authorization",token)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .header("clientId",1)
-                            .content("[\n" +
-                                    "  {\n" +
-                                    "  \"beerId\" : 1,\n" +
-                                    "  \"amount\" : 1\n" +
-                                    "  },\n" +
-                                    "  \n" +
-                                    "  {\n" +
-                                    "  \"beerId\" : 2,\n" +
-                                    "  \"amount\" : 2\n" +
-                                    "  }\n" +
-                                    "]"))
+        mockMvc.perform(post("/beer-shop-app/orders/make-order").header("Authorization",token))
                 //then
                 .andExpect(status().isOk());
     }
@@ -44,23 +31,10 @@ public class ClientControllerTest extends AbstractControllerTest {
     public void testClientMakeOrderWhenNotAuthorized() throws Exception {
         //given
         //when
-        mockMvc.perform(post("/beer-shop-app/client/make-order")
-                .contentType(MediaType.APPLICATION_JSON)
-                .header("clientId",1)
-                .content("[\n" +
-                        "  {\n" +
-                        "  \"beerId\" : 1,\n" +
-                        "  \"amount\" : 1\n" +
-                        "  },\n" +
-                        "  \n" +
-                        "  {\n" +
-                        "  \"beerId\" : 2,\n" +
-                        "  \"amount\" : 2\n" +
-                        "  }\n" +
-                        "]"))
+        mockMvc.perform(post("/beer-shop-app/orders/make-order")
+                .contentType(MediaType.APPLICATION_JSON))
                 //then
                 .andExpect(status().isForbidden());
     }
-
 
 }

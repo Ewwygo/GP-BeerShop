@@ -2,26 +2,20 @@ package com.gpsolutions.edu.beershop.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gpsolutions.edu.beershop.dto.UserSignInResponse;
-import com.gpsolutions.edu.beershop.entity.AuthInfoEntity;
 import com.gpsolutions.edu.beershop.entity.UserEntity;
-import com.gpsolutions.edu.beershop.repository.AuthInfoRepository;
+import com.gpsolutions.edu.beershop.repository.OrderRepository;
 import com.gpsolutions.edu.beershop.repository.UserRepository;
-import com.gpsolutions.edu.beershop.security.LoadClientDetailService;
 import com.gpsolutions.edu.beershop.security.Roles;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
-import javax.management.relation.Role;
-import java.util.List;
 import java.util.Optional;
 
 import static com.gpsolutions.edu.beershop.security.Roles.ADMIN;
@@ -34,6 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @Log
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestPropertySource("classpath:application-test.properties")
 @AutoConfigureMockMvc
 public abstract class AbstractControllerTest {
 
@@ -44,20 +39,23 @@ public abstract class AbstractControllerTest {
     @Autowired
     protected PasswordEncoder passwordEncoder;
 
-    @MockBean
-    protected AuthInfoRepository authInfoRepository;
+    private final String SALT = "my salt stonks";
+
     @MockBean
     protected UserRepository userRepository;
 
+    @MockBean
+    protected OrderRepository orderRepository;
+
     protected String signInAsClient() throws Exception {
 
-        final AuthInfoEntity authInfo = createAuthInfo(CLIENT);
-        willReturn(Optional.of(authInfo)).given(authInfoRepository).findByLogin("vasya@email.com");
+        final UserEntity user = createUserInfo(CLIENT);
+        willReturn(Optional.of(user)).given(userRepository).findByLogin("vasya@email.com");
 
         final String response = mockMvc.perform(post("/beer-shop-app/client/sign-in")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\n" +
-                        "  \"email\" : \"vasya@email.com\",\n" +
+                        "  \"login\" : \"vasya@email.com\",\n" +
                         "  \"password\" : \"qwerty\"\n" +
                         "}"))
                 // then
@@ -69,13 +67,13 @@ public abstract class AbstractControllerTest {
 
     protected String signInAsAdmin() throws Exception {
 
-        final AuthInfoEntity authInfo = createAuthInfo(ADMIN);
-        willReturn(Optional.of(authInfo)).given(authInfoRepository).findByLogin("admin@email.com");
+        final UserEntity user = createUserInfo(ADMIN);
+        willReturn(Optional.of(user)).given(userRepository).findByLogin("admin@email.com");
 
         final String response = mockMvc.perform(post("/beer-shop-app/client/sign-in")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\n" +
-                        "  \"email\" : \"admin@email.com\",\n" +
+                        "  \"login\" : \"admin@email.com\",\n" +
                         "  \"password\" : \"qwerty\"\n" +
                         "}"))
                 // then
@@ -85,16 +83,16 @@ public abstract class AbstractControllerTest {
         return "Bearer " + objectMapper.readValue(response, UserSignInResponse.class).getToken();
     }
 
-    protected AuthInfoEntity createAuthInfo(Roles role) {
+    protected UserEntity createUserInfo(Roles role) {
         final UserEntity user = new UserEntity();
         user.setRole(role);
-        user.setEmail("vasya@email.com");
-
-        final AuthInfoEntity authInfo = new AuthInfoEntity();
-        authInfo.setLogin(user.getEmail());
-        authInfo.setPassword(passwordEncoder.encode("qwerty"));
-        authInfo.setUser(user);
-        return authInfo;
+        user.setId(1l);
+        user.setFio("Пупкин Василий Иванович");
+        user.setPhoneNumber("+3752912345678");
+        user.setInfo("Молодой инженер");
+        user.setLogin("vasya@email.com");
+        user.setPassword(passwordEncoder.encode("qwerty"+SALT));
+        return user;
     }
 
 
