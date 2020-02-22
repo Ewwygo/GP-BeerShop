@@ -39,30 +39,13 @@ public class BeerCatalogControllerTest extends AbstractControllerTest {
         mockMvc.perform(post("/beer-shop-app/catalog/add-new-beer").header("Authorization", token)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content("{\n" +
-                                        "  \"title\" : \"Kozel\",\n" +
+                                        "  \"title\" : \"Goose\",\n" +
                                         "  \"description\" : \"Strong\",\n" +
                                         "  \"alco\" : \"5.7%\",\n" +
                                         "  \"density\" : \"10%\",\n" +
                                         "  \"price\" : 5\n" +
                                         "}"))
                 .andExpect(status().isOk());
-    }
-
-    @Test
-    public void testCatalogAddExistingBeerIsBad() throws Exception {
-        //given
-        final String token = signInAsAdmin();
-        //when
-        mockMvc.perform(post("/beer-shop-app/catalog/add-new-beer").header("Authorization", token)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\n" +
-                        "  \"title\" : \"Kozel\",\n" +
-                        "  \"description\" : \"Strong\",\n" +
-                        "  \"alco\" : \"5.7%\",\n" +
-                        "  \"density\" : \"10%\",\n" +
-                        "  \"price\" : 5\n" +
-                        "}"))
-                .andExpect(status().isBadRequest());
     }
 
     @Test
