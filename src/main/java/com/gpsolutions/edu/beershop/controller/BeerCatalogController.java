@@ -1,7 +1,6 @@
 package com.gpsolutions.edu.beershop.controller;
 
 import com.gpsolutions.edu.beershop.dto.BeerDTO;
-import com.gpsolutions.edu.beershop.exception.NoSuchBeerException;
 import com.gpsolutions.edu.beershop.exception.SuchBeerAlreadyExistException;
 import com.gpsolutions.edu.beershop.service.BeerCatalogService;
 import lombok.extern.java.Log;
@@ -38,7 +37,7 @@ public class BeerCatalogController {
 
     @PostMapping(value = "/delete-beer/{beerId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public void deleteBeer(@PathVariable final Long beerId) throws NoSuchBeerException {
+    public void deleteBeer(@PathVariable final Long beerId){
         beerCatalogService.deleteBeer(beerId);
     }
 }

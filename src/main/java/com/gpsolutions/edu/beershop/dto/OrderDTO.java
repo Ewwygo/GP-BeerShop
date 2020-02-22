@@ -5,15 +5,15 @@ import com.gpsolutions.edu.beershop.entity.OrderProcessStatus;
 import lombok.Data;
 
 import java.util.List;
-import java.util.Map;
 
 @Data
 public class OrderDTO {
 
     private Long id;
 
-    private Long clientId;
+    private ClientDTO clientDTO;
 
-    private Map<BeerDTO,Integer> beerMap;
-    private double cost;
+    private List<BeerDTO> beerDTOList;
+    private OrderProcessStatus orderProcessStatus;
+    private OrderCompleteStatus orderCompleteStatus;
 }
