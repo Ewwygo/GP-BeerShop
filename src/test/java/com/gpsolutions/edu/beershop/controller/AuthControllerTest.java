@@ -24,7 +24,7 @@ public class AuthControllerTest extends AbstractControllerTest {
         mockMvc.perform(post("/beer-shop-app/client/sign-in")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\n" +
-                        "   \"email\" : \"vasya@email.com\",\n" +
+                        "   \"login\" : \"vasya@email.com\",\n" +
                         "   \"password\" : \"qwerty\"\n" +
                         "}"))
                 //then
@@ -35,13 +35,13 @@ public class AuthControllerTest extends AbstractControllerTest {
     @Test
     public void testClientSignUpIsCreated() throws Exception {
         // given
-        willReturn(Optional.empty(), Optional.of(createAuthInfo(Roles.CLIENT))).given(authInfoRepository)
+        willReturn(Optional.empty(), Optional.of(createUserInfo(Roles.CLIENT))).given(userRepository)
                 .findByLogin("vasya@email.com");
         // when
         mockMvc.perform(post("/beer-shop-app/client/sign-up")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\n" +
-                        "  \"email\" : \"vasya@email.com\",\n" +
+                        "  \"login\" : \"vasya@email.com\",\n" +
                         "  \"password\" : \"qwerty\",\n" +
                         "  \"fio\" : \"Пупкин Василий Иванович\",\n" +
                         "  \"phoneNumber\" : \"+3752912345678\",\n" +
@@ -60,11 +60,10 @@ public class AuthControllerTest extends AbstractControllerTest {
         mockMvc.perform(post("/beer-shop-app/client/sign-up")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\n" +
-                        "  \"email\" : \"vasya@email.com\",\n" +
+                        "  \"login\" : \"vasya@email.com\",\n" +
                         "  \"password\" : \"qwerty\",\n" +
                         "  \"fio\" : \"Пупкин Василий Иванович\",\n" +
-                        "  \"gender\" : \"MALE\", \n" +
-                        "  \"birthDate\" : \"19.01.1995\",\n" +
+                        "  \"phoneNumber\" : \"+3752912345678\",\n" +
                         "  \"info\" : \"Молодой инженер\" \n" +
                         "}"))
                 // then

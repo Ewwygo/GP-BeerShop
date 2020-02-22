@@ -2,6 +2,7 @@ package com.gpsolutions.edu.beershop.service;
 
 import com.gpsolutions.edu.beershop.dto.BeerDTO;
 import com.gpsolutions.edu.beershop.entity.BeerEntity;
+import com.gpsolutions.edu.beershop.exception.NoSuchBeerException;
 import com.gpsolutions.edu.beershop.exception.SuchBeerAlreadyExistException;
 import com.gpsolutions.edu.beershop.mapper.BeerMapper;
 import com.gpsolutions.edu.beershop.repository.BeerRepository;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Log
@@ -40,17 +42,21 @@ public class BeerCatalogService {
     }
 
     public void addNewBeer(final BeerDTO beer) throws SuchBeerAlreadyExistException {
-
-        beerRepository.save(beerMapper.sourceToDestination(beer));
-
-        /*if (beerSet.contains(beer)){
-            throw new SuchBeerAlreadyExistException("Beer " + beer.getTitle() + " with its parameters already exists");
-        }else {
-            beerSet.add(beer);
-        }*/
+        final String title = beer.getTitle();
+        final Optional<BeerEntity> beerEntity = beerRepository.findByTitle(title);
+        if (beerEntity.isEmpty()){
+            beerRepository.save(beerMapper.sourceToDestination(beer));
+        } else {
+            throw new SuchBeerAlreadyExistException("Beer " + title + " already exists");
+        }
     }
 
-    public void deleteBeer(final Long beerId) {
-        beerRepository.delete(beerRepository.findById(beerId).get());
+    public void deleteBeer(final Long beerId) throws NoSuchBeerException {
+        Optional<BeerEntity> beerEntity = beerRepository.findById(beerId);
+        if (beerEntity.isPresent()) {
+            beerRepository.delete(beerEntity.get());
+        } else {
+            throw new NoSuchBeerException("Beer with id=" + beerId + " not found");
+        }
     }
 }

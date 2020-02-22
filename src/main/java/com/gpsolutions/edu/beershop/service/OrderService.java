@@ -41,7 +41,7 @@ public class OrderService {
     }
 
     @Transactional
-    public void addBeerToOrder(final Long beerId, final UserEntity user) throws NoSuchBeerException {
+    public void addBeerToOrder(final Long beerId,final Integer amount, final UserEntity user) throws NoSuchBeerException {
         final Optional<BeerEntity> beerEntity = beerCatalogService.getBeerRepository().findById(beerId);
 
         if (beerEntity.isPresent()){
@@ -54,7 +54,9 @@ public class OrderService {
                 order.setOrderProcessStatus(OrderProcessStatus.IN_PROCCESS);
                 order.setBeerList(new ArrayList<>());
                 order.setOrderCompleteStatus(OrderCompleteStatus.NOT_COMPLETE);
-                order.getBeerList().add(beerEntity.get());
+                for (int i = 0; i <amount; i++){
+                    order.getBeerList().add(beerEntity.get());
+                }
                 orderRepository.save(order);
             }
         } else {
@@ -76,6 +78,22 @@ public class OrderService {
             orderEntity.get().setOrderCompleteStatus(OrderCompleteStatus.COMPLETE);
         } else {
             throw new OrderNotFoundException("Order with id=" + orderId + " not found");
+        }
+    }
+
+    @Transactional
+    public void removeBeerFromOrder(final Long beerId, final UserEntity userEntity){
+        final Optional<OrderEntity> orderEntity = orderRepository.findByUserEntityAndOrderProcessStatus(
+                userEntity, OrderProcessStatus.IN_PROCCESS);
+        final Optional<BeerEntity> beerEntity = beerCatalogService.getBeerRepository().findById(beerId);
+
+        if (orderEntity.isPresent()){
+            if (beerEntity.isPresent()){
+                final List<BeerEntity> beerList = orderEntity.get().getBeerList();
+                while (beerList.contains(beerEntity.get())){
+                    beerList.remove(beerEntity.get());
+                }
+            }
         }
     }
 }
