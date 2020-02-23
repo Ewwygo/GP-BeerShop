@@ -1,7 +1,6 @@
 package com.gpsolutions.edu.beershop.entity;
 
 import com.gpsolutions.edu.beershop.security.Roles;
-import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;

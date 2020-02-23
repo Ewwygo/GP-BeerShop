@@ -32,7 +32,8 @@ public class OrderService {
     @Transactional
     public void makeOrder(final ClientDTO user) throws OrderNotFoundException {
         final UserEntity userEntity = clientMapper.sourceToDestination(user);
-        final Optional<OrderEntity> orderEntity = orderRepository.findByUserEntityAndOrderProcessStatus(userEntity, OrderProcessStatus.IN_PROCCESS);
+        final Optional<OrderEntity> orderEntity = orderRepository.findByUserEntityAndOrderProcessStatus(
+                userEntity, OrderProcessStatus.IN_PROCCESS);
         if (orderEntity.isPresent()){
             orderEntity.get().setOrderProcessStatus(OrderProcessStatus.READY);
         } else {
@@ -45,7 +46,8 @@ public class OrderService {
         final Optional<BeerEntity> beerEntity = beerCatalogService.getBeerRepository().findById(beerId);
 
         if (beerEntity.isPresent()){
-            final Optional<OrderEntity> orderEntity = orderRepository.findByUserEntityAndOrderProcessStatus(user, OrderProcessStatus.IN_PROCCESS);
+            final Optional<OrderEntity> orderEntity = orderRepository.findByUserEntityAndOrderProcessStatus(
+                    user, OrderProcessStatus.IN_PROCCESS);
             if (orderEntity.isPresent()){
                 orderEntity.get().getBeerList().add(beerEntity.get());
             } else {

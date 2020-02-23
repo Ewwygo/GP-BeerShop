@@ -7,7 +7,6 @@ import lombok.Data;
 @Builder
 public class BeerDTO {
 
-    private Long id;
     private String title;
     private String description;
     private String alco;

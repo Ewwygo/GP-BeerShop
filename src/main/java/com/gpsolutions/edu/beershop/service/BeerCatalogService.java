@@ -26,7 +26,6 @@ public class BeerCatalogService {
     @PostConstruct
     public void init() {
         beerRepository.save(beerMapper.sourceToDestination(BeerDTO.builder()
-                .id(1L)
                 .title("Goose")
                 .description("Strong")
                 .alco("5.7%")

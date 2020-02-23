@@ -93,7 +93,7 @@ Response:
 
 Request:
 
-`GET /beer-shop-app/orders`
+`GET /beer-shop-app/admin/orders`
 
 Response:
 `200 OK`
@@ -112,7 +112,7 @@ Response:
 
 Request:
 
-`POST /beer-shop-app/orders/${orderId}/complete-order`
+`POST /beer-shop-app/admin/orders/${orderId}/complete-order`
 
 Response:
 `200 OK`

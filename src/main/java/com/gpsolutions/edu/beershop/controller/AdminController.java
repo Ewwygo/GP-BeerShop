@@ -2,11 +2,9 @@ package com.gpsolutions.edu.beershop.controller;
 
 import com.gpsolutions.edu.beershop.dto.OrderDTO;
 import com.gpsolutions.edu.beershop.exception.OrderNotFoundException;
-import com.gpsolutions.edu.beershop.service.AdminService;
 import com.gpsolutions.edu.beershop.service.OrderService;
 import lombok.extern.java.Log;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

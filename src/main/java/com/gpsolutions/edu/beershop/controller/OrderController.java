@@ -1,7 +1,6 @@
 package com.gpsolutions.edu.beershop.controller;
 
 import com.gpsolutions.edu.beershop.dto.ClientDTO;
-import com.gpsolutions.edu.beershop.dto.OrderDTO;
 import com.gpsolutions.edu.beershop.entity.UserEntity;
 import com.gpsolutions.edu.beershop.exception.NoSuchBeerException;
 import com.gpsolutions.edu.beershop.exception.OrderNotFoundException;
@@ -9,9 +8,6 @@ import com.gpsolutions.edu.beershop.service.OrderService;
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

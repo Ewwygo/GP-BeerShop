@@ -10,7 +10,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/beer-shop-app/catalog")
@@ -36,7 +35,7 @@ public class BeerCatalogController {
         beerCatalogService.addNewBeer(beer);
     }
 
-    @PostMapping(value = "/delete-beer/{beerId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/delete-beer/{beerId}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteBeer(@PathVariable final Long beerId) throws NoSuchBeerException {
         beerCatalogService.deleteBeer(beerId);

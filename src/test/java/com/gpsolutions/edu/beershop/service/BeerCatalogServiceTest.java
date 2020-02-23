@@ -20,7 +20,6 @@ public class BeerCatalogServiceTest extends AbstractServiceTest {
     @Test
     public void testGetCatalog(){
         final List<BeerDTO> beerEntity = List.of(BeerDTO.builder()
-                .id(1L)
                 .title("Goose")
                 .description("Strong")
                 .alco("5.7%")

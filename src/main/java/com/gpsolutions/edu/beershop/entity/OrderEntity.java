@@ -1,6 +1,5 @@
 package com.gpsolutions.edu.beershop.entity;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
